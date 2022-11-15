@@ -1098,12 +1098,17 @@ def calc_L3_case1(A2, a,b,c, L2s):
 				if A not in L2s:
 					continue
 
-			print("Checking",configuration_string(B3),B3,B_to_A(B3))
-			if (bn := calc_bn_H(A3)) > bmax:
-				# If an equivalent configuration was already processed then calc_bn_H returns 0
-				# so A3 will not be added to L3
+			if not bicluster and A2[0] == A2[1] == 1 and a == b == 1:
 				L3.append(A3)
-				print("Added",configuration_string(B3),B3,bn)
+				print("Added",configuration_string(B3),B3)
+
+			else:
+				print("Checking",configuration_string(B3),B3,B_to_A(B3))
+				if (bn := calc_bn_H(A3)) > bmax:
+					# If an equivalent configuration was already processed then calc_bn_H returns 0
+					# so A3 will not be added to L3
+					L3.append(A3)
+					print("Added",configuration_string(B3),B3,bn)
 	return L3
 
 def L2_to_L2star(L2):
@@ -1120,7 +1125,6 @@ def calc_L3(L2):
 	L3 = []
 	for A in L2s:
 		for a,b,c in L2s:
-			if not bicluster and A[0] == A[1] == 1 and a == b == 1: continue
 			L3 += calc_L3_case1(A, a,b,c, L2s)
 
 	return L3
